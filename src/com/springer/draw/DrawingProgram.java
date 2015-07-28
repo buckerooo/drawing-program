@@ -2,36 +2,30 @@ package com.springer.draw;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DrawingProgram {
     private List<List<Character>> canvas = new ArrayList<>();
+
+    private Map<String, DrawCommand> drawOptions = new HashMap<>();
 
     private final PrintStream printStream;
 
     public DrawingProgram(PrintStream printStream) {
         this.printStream = printStream;
+
+        this.drawOptions.put("C", new CreateCanvas(canvas));
     }
 
     public void enterCommand(String command) {
-        String[] inputs = command.split(" ");
-        int width = Integer.valueOf(inputs[1]);
-        int height = Integer.valueOf(inputs[2]);
-
-        canvas.add(charsOfSize(width + 2, '-'));
-
-        for(int rowPosition = 1; rowPosition <= height; rowPosition++) {
-            List<Character> row = new ArrayList<>();
-            row.addAll(charsOfSize(1, '|'));
-            row.addAll(charsOfSize(width, ' '));
-            row.addAll(charsOfSize(1, '|'));
-            canvas.add(rowPosition, row);
-        }
-
-        canvas.add(height + 1, charsOfSize(width + 2, '-'));
+        drawOptions.get(command.split(" ")[0])
+                .draw(command.substring(2));
 
         printCommand(command);
         printCanvas();
+        printStream.flush();
     }
 
     private void printCommand(String command) {
@@ -43,15 +37,5 @@ public class DrawingProgram {
             characters.iterator().forEachRemaining(printStream::print);
             printStream.print("\n");
         });
-    }
-
-    private List<Character> charsOfSize(int width, char c) {
-        List<Character> chars = new ArrayList<>();
-
-        for(int x = 0; x < width; x++) {
-            chars.add(c);
-        }
-
-        return chars;
     }
 }

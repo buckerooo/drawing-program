@@ -17,6 +17,7 @@ public class DrawingProgram {
         this.printStream = printStream;
 
         this.drawOptions.put("C", new CreateCanvas(canvas));
+        this.drawOptions.put("L", new DrawLine(canvas));
     }
 
     public void enterCommand(String command) {

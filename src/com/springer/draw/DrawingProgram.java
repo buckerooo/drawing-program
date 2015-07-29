@@ -1,13 +1,11 @@
 package com.springer.draw;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DrawingProgram {
-    private List<List<Character>> canvas = new ArrayList<>();
+    private Canvas canvas = new Canvas();
 
     private Map<String, DrawCommand> drawOptions = new HashMap<>();
 
@@ -18,25 +16,15 @@ public class DrawingProgram {
 
         this.drawOptions.put("C", new CreateCanvas(canvas));
         this.drawOptions.put("L", new DrawLine(canvas));
+        this.drawOptions.put("R", new DrawRectangle(canvas));
     }
 
     public void enterCommand(String command) {
         drawOptions.get(command.split(" ")[0])
                 .draw(command.substring(2));
 
-        printCommand(command);
-        printCanvas();
-        printStream.flush();
-    }
-
-    private void printCommand(String command) {
         printStream.println("enter command: " + command);
-    }
-
-    private void printCanvas() {
-        canvas.iterator().forEachRemaining(characters -> {
-            characters.iterator().forEachRemaining(printStream::print);
-            printStream.print("\n");
-        });
+        canvas.printCanvas(printStream);
+        printStream.flush();
     }
 }

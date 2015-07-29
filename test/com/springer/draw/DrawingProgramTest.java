@@ -74,4 +74,27 @@ public class DrawingProgramTest {
 
         assertThat(actualOutput.toString(), equalTo(expectedOutput));
     }
+
+    @Test
+    public void shouldBeAbleToDrawARectangleOnTheCanvas() {
+        ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
+
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput));
+        drawingProgram.enterCommand("C 20 4");
+
+        actualOutput.reset();
+
+        drawingProgram.enterCommand("R 16 1 20 3");
+
+        String expectedOutput =
+                        "enter command: R 16 1 20 3\n"  +
+                        "----------------------\n" +
+                        "|               xxxxx|\n" +
+                        "|               x   x|\n" +
+                        "|               xxxxx|\n" +
+                        "|                    |\n" +
+                        "----------------------\n" ;
+
+        assertThat(actualOutput.toString(), equalTo(expectedOutput));
+    }
 }

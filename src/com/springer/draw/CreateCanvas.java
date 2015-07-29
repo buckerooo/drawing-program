@@ -5,9 +5,9 @@ import java.util.List;
 
 public class CreateCanvas implements DrawCommand {
 
-    private final List<List<Character>> canvas;
+    private final Canvas canvas;
 
-    public CreateCanvas(List<List<Character>> canvas) {
+    public CreateCanvas(Canvas canvas) {
         this.canvas = canvas;
     }
 

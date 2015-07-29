@@ -116,7 +116,7 @@ public class DrawingProgramTest {
         drawingProgram.enterCommand("B 10 3 o");
 
         String expectedOutput =
-                "enter command: B 10 3 o\n"  +
+                        "enter command: B 10 3 o\n"  +
                         "----------------------\n" +
                         "|oooooooooooooooxxxxx|\n" +
                         "|xxxxxxooooooooox   x|\n" +
@@ -140,5 +140,19 @@ public class DrawingProgramTest {
         assertThat(programHasBeenTerminated.get(), equalTo(false));
         drawingProgram.enterCommand("Q");
         assertThat(programHasBeenTerminated.get(), equalTo(true));
+    }
+
+    @Test
+    public void makeSureAnyExceptionsGoToPrintStream() {
+        ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
+
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), ()->{});
+        drawingProgram.enterCommand("C 20 4");
+
+        actualOutput.reset();
+
+        drawingProgram.enterCommand("L 1 2 3 4");
+
+        assertThat(actualOutput.toString(), equalTo("enter command: L 1 2 3 4\nTo draw a line either the x's or the y's must have the same value.\n"));
     }
 }

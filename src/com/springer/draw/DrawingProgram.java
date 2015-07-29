@@ -10,9 +10,19 @@ public class DrawingProgram {
     private Map<String, DrawCommand> drawOptions = new HashMap<>();
 
     private final PrintStream printStream;
+    private final ProgramExiter programExiter;
 
-    public DrawingProgram(PrintStream printStream) {
+    public DrawingProgram() {
+        this(System.out, () -> System.exit(0));
+    }
+
+    public interface ProgramExiter {
+        void exit();
+    }
+
+    public DrawingProgram(PrintStream printStream, ProgramExiter programExiter) {
         this.printStream = printStream;
+        this.programExiter = programExiter;
 
         this.drawOptions.put("C", new CreateCanvas(canvas));
         this.drawOptions.put("L", new DrawLine(canvas));
@@ -21,6 +31,11 @@ public class DrawingProgram {
     }
 
     public void enterCommand(String command) {
+        if(command.equals("Q")) {
+            programExiter.exit();
+            return;
+        }
+
         drawOptions.get(command.split(" ")[0])
                 .draw(command.substring(2));
 

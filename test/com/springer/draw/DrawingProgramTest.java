@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -14,7 +15,7 @@ public class DrawingProgramTest {
     public void shouldBeAbleToCreateACanvas() {
         ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
 
-        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput));
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), ()->{});
         drawingProgram.enterCommand("C 20 4");
 
         String expectedOutput =
@@ -33,7 +34,7 @@ public class DrawingProgramTest {
     public void shouldBeAbleToDrawAHorizontalLineOnTheCanvas() {
         ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
 
-        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput));
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), ()->{});
         drawingProgram.enterCommand("C 20 4");
 
         actualOutput.reset();
@@ -56,7 +57,7 @@ public class DrawingProgramTest {
     public void shouldBeAbleToDrawAVerticalLineOnTheCanvas() {
         ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
 
-        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput));
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), ()->{});
         drawingProgram.enterCommand("C 20 4");
 
         actualOutput.reset();
@@ -79,7 +80,7 @@ public class DrawingProgramTest {
     public void shouldBeAbleToDrawARectangleOnTheCanvas() {
         ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
 
-        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput));
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), ()->{});
         drawingProgram.enterCommand("C 20 4");
 
         actualOutput.reset();
@@ -102,7 +103,7 @@ public class DrawingProgramTest {
     public void shouldBeAbleToFillAnAreaOnTheCanvasWithAColor() {
         ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
 
-        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput));
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), ()->{});
 
         drawingProgram.enterCommand("C 20 4");
 
@@ -124,5 +125,20 @@ public class DrawingProgramTest {
                         "----------------------\n" ;
 
         assertThat(actualOutput.toString(), equalTo(expectedOutput));
+    }
+
+    @Test
+    public void shouldBeAbleToQuitTheProgram() {
+        ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
+
+        AtomicBoolean programHasBeenTerminated = new AtomicBoolean(false);
+
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), () -> {programHasBeenTerminated.set(true);});
+
+        drawingProgram.enterCommand("C 20 4");
+
+        assertThat(programHasBeenTerminated.get(), equalTo(false));
+        drawingProgram.enterCommand("Q");
+        assertThat(programHasBeenTerminated.get(), equalTo(true));
     }
 }

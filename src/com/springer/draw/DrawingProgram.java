@@ -1,5 +1,8 @@
 package com.springer.draw;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,5 +45,17 @@ public class DrawingProgram {
         printStream.println("enter command: " + command);
         canvas.printCanvas(printStream);
         printStream.flush();
+    }
+
+    public static void main(String[] args) throws IOException {
+        DrawingProgram drawingProgram = new DrawingProgram();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        String input;
+
+        while((input=br.readLine())!=null){
+            drawingProgram.enterCommand(input);
+        }
     }
 }

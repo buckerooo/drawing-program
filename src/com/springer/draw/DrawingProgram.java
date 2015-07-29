@@ -39,11 +39,16 @@ public class DrawingProgram {
             return;
         }
 
-        drawOptions.get(command.split(" ")[0])
-                .draw(command.substring(2));
-
         printStream.println("enter command: " + command);
-        canvas.printCanvas(printStream);
+        try {
+            drawOptions.get(command.split(" ")[0])
+                    .draw(command.substring(2));
+
+            canvas.printCanvas(printStream);
+        } catch (Exception e) {
+            printStream.println(e.getMessage());
+        }
+
         printStream.flush();
     }
 

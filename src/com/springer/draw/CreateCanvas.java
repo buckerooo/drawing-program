@@ -2,6 +2,8 @@ package com.springer.draw;
 
 public class CreateCanvas implements DrawCommand {
 
+    public static final String CREATE_CANVAS_COMMAND = "C w h";
+
     private final Canvas canvas;
 
     public CreateCanvas(Canvas canvas) {

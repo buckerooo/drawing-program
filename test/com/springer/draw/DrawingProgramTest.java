@@ -97,4 +97,32 @@ public class DrawingProgramTest {
 
         assertThat(actualOutput.toString(), equalTo(expectedOutput));
     }
+
+    @Test
+    public void shouldBeAbleToFillAnAreaOnTheCanvasWithAColor() {
+        ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
+
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput));
+
+        drawingProgram.enterCommand("C 20 4");
+
+        drawingProgram.enterCommand("L 1 2 6 2");
+        drawingProgram.enterCommand("L 6 3 6 4");
+        drawingProgram.enterCommand("R 16 1 20 3");
+
+        actualOutput.reset();
+
+        drawingProgram.enterCommand("B 10 3 o");
+
+        String expectedOutput =
+                "enter command: B 10 3 o\n"  +
+                        "----------------------\n" +
+                        "|oooooooooooooooxxxxx|\n" +
+                        "|xxxxxxooooooooox   x|\n" +
+                        "|     xoooooooooxxxxx|\n" +
+                        "|     xoooooooooooooo|\n" +
+                        "----------------------\n" ;
+
+        assertThat(actualOutput.toString(), equalTo(expectedOutput));
+    }
 }

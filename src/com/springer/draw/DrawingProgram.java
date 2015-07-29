@@ -17,6 +17,7 @@ public class DrawingProgram {
         this.drawOptions.put("C", new CreateCanvas(canvas));
         this.drawOptions.put("L", new DrawLine(canvas));
         this.drawOptions.put("R", new DrawRectangle(canvas));
+        this.drawOptions.put("B", new FillArea(canvas));
     }
 
     public void enterCommand(String command) {

@@ -31,4 +31,12 @@ public class Canvas {
             printStream.print("\n");
         });
     }
+
+    public void fill(Point point, char fillColor) {
+        fill(point, point, fillColor);
+    }
+
+    public boolean isEmptySpace(Point point) {
+        return canvas.get(point.y).get(point.x) == ' ';
+    }
 }

@@ -27,29 +27,8 @@ public class Canvas {
         hasCanvasBeenCreated();
         arePointsWithinBounds(from, to);
 
-        /* This bit takes care of the horizontal line */
-        List<Character> row = canvas.get(from.y);
-        row.subList(from.x, to.x + 1).replaceAll(character -> 'x');
-
-        /* This bit takes care of the vertical line */
-        List<List<Character>> allRowsForVerticalLine = canvas.subList(from.y, to.y + 1);
-        allRowsForVerticalLine.forEach(row1 -> row1.subList(from.x, to.x + 1).replaceAll(character -> x));
-    }
-
-    private void hasCanvasBeenCreated() {
-        if(canvas.size() == 0) {
-            throw new UnsupportedOperationException("Unable to draw on a blank canvas, please create canvas first using " + CREATE_CANVAS_COMMAND);
-        }
-    }
-
-    private void arePointsWithinBounds(Point from, Point to) {
-        int maximumX = canvas.get(0).size() - 2;
-        int maximumY = canvas.size() - 2;
-        if(from.x == 0 || from.y == 0 || to.x == 0 || to.y == 0 ||
-                from.x > maximumX || to.x > maximumX ||
-                from.y > maximumY || to.y > maximumY) {
-            throw new UnsupportedOperationException("Unable to draw out of canvas, bounds are (1,1) to (" + maximumX + "," + maximumY + ")");
-        }
+        List<List<Character>> allRowsThatNeedABitOfFilling = canvas.subList(from.y, to.y + 1);
+        allRowsThatNeedABitOfFilling.forEach(row1 -> row1.subList(from.x, to.x + 1).replaceAll(character -> x));
     }
 
     public void fill(Point point, char fillColor) {
@@ -65,6 +44,22 @@ public class Canvas {
             characters.iterator().forEachRemaining(printStream::print);
             printStream.print("\n");
         });
+    }
+
+    private void hasCanvasBeenCreated() {
+        if (canvas.size() == 0) {
+            throw new UnsupportedOperationException("Unable to draw on a blank canvas, please create canvas first using " + CREATE_CANVAS_COMMAND);
+        }
+    }
+
+    private void arePointsWithinBounds(Point from, Point to) {
+        int maximumX = canvas.get(0).size() - 2;
+        int maximumY = canvas.size() - 2;
+        if(from.x == 0 || from.y == 0 || to.x == 0 || to.y == 0 ||
+                from.x > maximumX || to.x > maximumX ||
+                from.y > maximumY || to.y > maximumY) {
+            throw new UnsupportedOperationException("Unable to draw out of canvas, bounds are (1,1) to (" + maximumX + "," + maximumY + ")");
+        }
     }
 
     private List<Character> charsOfSize(int width, char c) {

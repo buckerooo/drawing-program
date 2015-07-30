@@ -2,9 +2,8 @@ package com.springer.draw;
 
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static com.springer.draw.DrawLine.INVALID_DRAW_LINE_INPUTS_MESSAGE;
+import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
 
 public class DrawLineTest {
 
@@ -13,11 +12,17 @@ public class DrawLineTest {
         Canvas canvas = new Canvas();
         canvas.create(10, 10);
 
-        try {
-            new DrawLine(canvas).draw("1 2 3 4");
-            fail("Either x's or y's musy be the same");
-        } catch(UnsupportedOperationException expected) {
-          assertThat(expected.getMessage(), equalTo("To draw a line either the x's or the y's must have the same value."));
-        }
+        willThrowExceptionWithMessage((x) -> new DrawLine(canvas).draw("1 2 3 4"),
+                "To draw a line either the x's or the y's must have the same value.");
+    }
+
+    @Test
+    public void mustHaveValidInputParameters() {
+        Canvas canvas = new Canvas();
+
+        willThrowExceptionWithMessage((x) -> new DrawLine(canvas).draw("1"), INVALID_DRAW_LINE_INPUTS_MESSAGE);
+        willThrowExceptionWithMessage((x) -> new DrawLine(canvas).draw("1 2"), INVALID_DRAW_LINE_INPUTS_MESSAGE);
+        willThrowExceptionWithMessage((x) -> new DrawLine(canvas).draw("1 2 3"), INVALID_DRAW_LINE_INPUTS_MESSAGE);
+        willThrowExceptionWithMessage((x) -> new DrawLine(canvas).draw("1 2 3 a"), INVALID_DRAW_LINE_INPUTS_MESSAGE);
     }
 }

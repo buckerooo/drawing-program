@@ -1,5 +1,7 @@
 package com.springer.draw;
 
+import static com.springer.draw.InputsHelper.positiveIntValueFrom;
+
 public class DrawRectangle implements DrawCommand {
     private final Canvas canvas;
 
@@ -17,10 +19,10 @@ public class DrawRectangle implements DrawCommand {
             throw new IllegalArgumentException(INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE);
         }
 
-        int upperLeftX = intValue(positions[0]);
-        int upperLeftY = intValue(positions[1]);
-        int lowerRightX = intValue(positions[2]);
-        int lowerRightY = intValue(positions[3]);
+        int upperLeftX = positiveIntValueFrom(positions[0], INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE);
+        int upperLeftY = positiveIntValueFrom(positions[1], INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE);
+        int lowerRightX = positiveIntValueFrom(positions[2], INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE);
+        int lowerRightY = positiveIntValueFrom(positions[3], INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE);
 
         char fillChar = 'x';
 
@@ -28,13 +30,5 @@ public class DrawRectangle implements DrawCommand {
         canvas.fill(new Point(upperLeftX, upperLeftY), new Point(lowerRightX, upperLeftY), fillChar);
         canvas.fill(new Point(upperLeftX, lowerRightY), new Point(lowerRightX, lowerRightY), fillChar);
         canvas.fill(new Point(lowerRightX, upperLeftY), new Point(lowerRightX, lowerRightY), fillChar);
-    }
-
-    private Integer intValue(String position) {
-        try {
-            return Integer.valueOf(position);
-        } catch(NumberFormatException e) {
-            throw new IllegalArgumentException(INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE);
-        }
     }
 }

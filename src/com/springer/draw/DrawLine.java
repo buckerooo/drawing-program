@@ -1,5 +1,7 @@
 package com.springer.draw;
 
+import static com.springer.draw.InputsHelper.positiveIntValueFrom;
+
 public class DrawLine implements DrawCommand {
     private final Canvas canvas;
 
@@ -17,10 +19,10 @@ public class DrawLine implements DrawCommand {
             throw new IllegalArgumentException(INVALID_DRAW_LINE_INPUTS_MESSAGE);
         }
 
-        int x1 = intValue(positions[0]);
-        int y1 = intValue(positions[1]);
-        int x2 = intValue(positions[2]);
-        int y2 = intValue(positions[3]);
+        int x1 = positiveIntValueFrom(positions[0], INVALID_DRAW_LINE_INPUTS_MESSAGE);
+        int y1 = positiveIntValueFrom(positions[1], INVALID_DRAW_LINE_INPUTS_MESSAGE);
+        int x2 = positiveIntValueFrom(positions[2], INVALID_DRAW_LINE_INPUTS_MESSAGE);
+        int y2 = positiveIntValueFrom(positions[3], INVALID_DRAW_LINE_INPUTS_MESSAGE);
 
         if(x1 != x2 && y1 != y2) {
             throw new UnsupportedOperationException("To draw a line either the x's or the y's must have the same value.");
@@ -29,11 +31,4 @@ public class DrawLine implements DrawCommand {
         canvas.fill(new Point(x1, y1), new Point(x2, y2), 'x');
     }
 
-    private Integer intValue(String position) {
-        try {
-            return Integer.valueOf(position);
-        } catch(NumberFormatException e) {
-            throw new IllegalArgumentException(INVALID_DRAW_LINE_INPUTS_MESSAGE);
-        }
-    }
 }

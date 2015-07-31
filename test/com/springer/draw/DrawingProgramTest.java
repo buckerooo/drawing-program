@@ -19,7 +19,6 @@ public class DrawingProgramTest {
         drawingProgram.enterCommand("C 20 4");
 
         String expectedOutput =
-                "enter command: C 20 4\n"  +
                 "----------------------\n" +
                 "|                    |\n" +
                 "|                    |\n" +
@@ -42,7 +41,6 @@ public class DrawingProgramTest {
         drawingProgram.enterCommand("L 1 2 6 2");
 
         String expectedOutput =
-                        "enter command: L 1 2 6 2\n"  +
                         "----------------------\n" +
                         "|                    |\n" +
                         "|xxxxxx              |\n" +
@@ -65,7 +63,6 @@ public class DrawingProgramTest {
         drawingProgram.enterCommand("L 1 2 1 4");
 
         String expectedOutput =
-                        "enter command: L 1 2 1 4\n"  +
                         "----------------------\n" +
                         "|                    |\n" +
                         "|x                   |\n" +
@@ -88,7 +85,6 @@ public class DrawingProgramTest {
         drawingProgram.enterCommand("R 16 1 20 3");
 
         String expectedOutput =
-                        "enter command: R 16 1 20 3\n"  +
                         "----------------------\n" +
                         "|               xxxxx|\n" +
                         "|               x   x|\n" +
@@ -116,7 +112,6 @@ public class DrawingProgramTest {
         drawingProgram.enterCommand("B 10 3 o");
 
         String expectedOutput =
-                        "enter command: B 10 3 o\n"  +
                         "----------------------\n" +
                         "|oooooooooooooooxxxxx|\n" +
                         "|xxxxxxooooooooox   x|\n" +
@@ -153,6 +148,6 @@ public class DrawingProgramTest {
 
         drawingProgram.enterCommand("L 1 2 3 4");
 
-        assertThat(actualOutput.toString(), equalTo("enter command: L 1 2 3 4\nTo draw a line either the x's or the y's must have the same value.\n"));
+        assertThat(actualOutput.toString(), equalTo("To draw a line either the x's or the y's must have the same value.\n"));
     }
 }

@@ -39,7 +39,6 @@ public class DrawingProgram {
             return;
         }
 
-        printStream.println("enter command: " + command);
         try {
             drawOptions.get(command.split(" ")[0])
                     .draw(command.substring(2));
@@ -52,15 +51,20 @@ public class DrawingProgram {
         printStream.flush();
     }
 
-    public static void main(String[] args) throws IOException {
-        DrawingProgram drawingProgram = new DrawingProgram();
-
+    private void start() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         String input;
 
+        printStream.print("enter command: ");
+
         while((input=br.readLine())!=null){
-            drawingProgram.enterCommand(input);
+            enterCommand(input);
+            printStream.print("enter command: ");
         }
+    }
+
+    public static void main(String[] args) throws IOException {
+        new DrawingProgram().start();
     }
 }

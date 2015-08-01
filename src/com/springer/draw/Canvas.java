@@ -27,8 +27,13 @@ public class Canvas {
         hasCanvasBeenCreated();
         arePointsWithinBounds(from, to);
 
-        List<List<Character>> allRowsThatNeedABitOfFilling = canvas.subList(from.y, to.y + 1);
-        allRowsThatNeedABitOfFilling.forEach(row1 -> row1.subList(from.x, to.x + 1).replaceAll(character -> x));
+        Point topPoint = from.y < to.y ? from : to;
+        Point bottomPoint = from.y > to.y ? from : to;
+        Point leftPoint = from.x < to.x ? from : to;
+        Point rightPoint = from.x > to.x ? from : to;
+
+        List<List<Character>> allRowsThatNeedABitOfFilling = canvas.subList(topPoint.y, bottomPoint.y + 1);
+        allRowsThatNeedABitOfFilling.forEach(row1 -> row1.subList(leftPoint.x, rightPoint.x + 1).replaceAll(character -> x));
     }
 
     public void fill(Point point, char fillColor) {
@@ -70,5 +75,9 @@ public class Canvas {
         }
 
         return chars;
+    }
+
+    public char atPoint(Point point) {
+        return canvas.get(point.y).get(point.x);
     }
 }

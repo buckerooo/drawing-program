@@ -4,6 +4,8 @@ import org.junit.Test;
 
 import static com.springer.draw.DrawLine.INVALID_DRAW_LINE_INPUTS_MESSAGE;
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class DrawLineTest {
 
@@ -24,5 +26,53 @@ public class DrawLineTest {
         willThrowExceptionWithMessage((x) -> new DrawLine(canvas).draw("1 2"), INVALID_DRAW_LINE_INPUTS_MESSAGE);
         willThrowExceptionWithMessage((x) -> new DrawLine(canvas).draw("1 2 3"), INVALID_DRAW_LINE_INPUTS_MESSAGE);
         willThrowExceptionWithMessage((x) -> new DrawLine(canvas).draw("1 2 3 a"), INVALID_DRAW_LINE_INPUTS_MESSAGE);
+    }
+
+    @Test
+    public void canDrawLineRightToLeft() {
+        Canvas canvas = new Canvas();
+        canvas.create(20, 20);
+
+        new DrawLine(canvas).draw("10 5 8 5");
+
+        assertThat(canvas.atPoint(new Point(8, 5)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(9, 5)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(10, 5)), equalTo('x'));
+    }
+
+    @Test
+    public void canDrawLineLeftToRight() {
+        Canvas canvas = new Canvas();
+        canvas.create(20, 20);
+
+        new DrawLine(canvas).draw("8 5 10 5");
+
+        assertThat(canvas.atPoint(new Point(8, 5)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(9, 5)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(10, 5)), equalTo('x'));
+    }
+
+    @Test
+    public void canDrawLineTopToBottom() {
+        Canvas canvas = new Canvas();
+        canvas.create(20, 20);
+
+        new DrawLine(canvas).draw("2 8 2 10");
+
+        assertThat(canvas.atPoint(new Point(2, 8)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 9)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 10)), equalTo('x'));
+    }
+
+    @Test
+    public void canDrawLineBottomToTop() {
+        Canvas canvas = new Canvas();
+        canvas.create(20, 20);
+
+        new DrawLine(canvas).draw("2 10 2 5");
+
+        assertThat(canvas.atPoint(new Point(2, 8)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 9)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 10)), equalTo('x'));
     }
 }

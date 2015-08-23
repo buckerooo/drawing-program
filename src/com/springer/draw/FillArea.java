@@ -1,5 +1,7 @@
 package com.springer.draw;
 
+import java.util.Stack;
+
 public class FillArea implements DrawCommand {
     private final Canvas canvas;
 
@@ -15,20 +17,20 @@ public class FillArea implements DrawCommand {
         int y = Integer.valueOf(positions[1]);
         char fillColor = positions[2].charAt(0);
 
-        fill(new Point(x, y), fillColor);
-    }
+        Stack<Point> stack = new Stack<>();
+        stack.push(new Point(x, y));
 
-    private void fill(Point point, char fillColor) {
-        if(!canvas.isEmptySpace(point)) {
-            return;
+        while(!stack.empty()) {
+            Point point = stack.pop();
+            if(canvas.isEmptySpace(point)) {
+                canvas.fill(point, fillColor);
+
+                stack.push(new Point(point.x, point.y + 1));
+                stack.push(new Point(point.x, point.y - 1));
+                stack.push(new Point(point.x + 1, point.y));
+                stack.push(new Point(point.x - 1, point.y));
+            }
         }
-
-        canvas.fill(point, fillColor);
-
-        fill(new Point(point.x, point.y + 1), fillColor);
-        fill(new Point(point.x, point.y - 1), fillColor);
-        fill(new Point(point.x + 1, point.y), fillColor);
-        fill(new Point(point.x - 1, point.y), fillColor);
 
     }
 }

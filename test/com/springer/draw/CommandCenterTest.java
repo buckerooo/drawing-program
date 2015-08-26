@@ -23,6 +23,35 @@ public class CommandCenterTest {
         willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("C 0 5"), createCanvasError);
         willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("C 10 -2"), createCanvasError);
         willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("C -2 10"), createCanvasError);
+    }
+
+    @Test
+    public void canCreateDrawLineCommandGivenValidInputs() {
+        assertThat(new CommandCenter(new Canvas()).buildCommand("L 1 2 6 2"), instanceOf(DrawLine.class));
+    }
+
+    @Test
+    public void blowsUpWhenYouTryAndDrawALineWithInvalidInputs() {
+        String drawLineError = "Invalid command: to draw a line you must provide x1 y1 x2 y2. Example 'L 1 2 6 2'";
+
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2 6"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2 6 a"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2 6 a"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2 b 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 c 6 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L d 2 6 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L -1 2 6 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 -2 6 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2 -6 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2 6 -2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 0 2 6 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 0 6 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2 0 2"), drawLineError);
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas()).buildCommand("L 1 2 6 0"), drawLineError);
 
     }
+
 }

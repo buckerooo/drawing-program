@@ -4,13 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DrawingProgram {
-    private Canvas canvas = new Canvas();
-
-    private Map<String, DrawCommand> drawOptions = new HashMap<>();
+    private final CommandCenter commandCenter;
+    private final Canvas canvas = new Canvas();
 
     private final PrintStream printStream;
     private final ProgramExiter programExiter;
@@ -26,11 +23,7 @@ public class DrawingProgram {
     public DrawingProgram(PrintStream printStream, ProgramExiter programExiter) {
         this.printStream = printStream;
         this.programExiter = programExiter;
-
-        this.drawOptions.put("C", new CreateCanvas(canvas));
-        this.drawOptions.put("L", new DrawLine(canvas));
-        this.drawOptions.put("R", new DrawRectangle(canvas));
-        this.drawOptions.put("B", new FillArea(canvas));
+        this.commandCenter = new CommandCenter(canvas);
     }
 
     public void enterCommand(String command) {
@@ -40,9 +33,7 @@ public class DrawingProgram {
         }
 
         try {
-            drawOptions.get(command.split(" ")[0])
-                    .draw(command.substring(2));
-
+            commandCenter.buildCommand(command).draw(command.substring(2));
             canvas.printCanvas(printStream);
         } catch (Exception e) {
             printStream.println(e.getMessage());

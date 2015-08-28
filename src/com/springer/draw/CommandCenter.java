@@ -11,7 +11,7 @@ public class CommandCenter {
 
     /* todo: do i want to support upper and lower case chars */
 
-    public CommandCenter(Canvas canvas) {
+    public CommandCenter(Canvas canvas, ProgramExiter programExiter) {
         /* note: this would not support a user entering 02 for example as a number */
 
         this.drawOptions.put("C", inputs -> {
@@ -43,6 +43,7 @@ public class CommandCenter {
                 throw new IllegalArgumentException("Invalid command: to fill an area you must provide B x y c . Example 'B 10 3 o'");
             }
         });
+        this.drawOptions.put("Q", inputs -> new QuitCommand(programExiter));
     }
 
     private interface CommandBuilder {

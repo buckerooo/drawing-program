@@ -10,30 +10,19 @@ public class DrawingProgram {
     private final Canvas canvas = new Canvas();
 
     private final PrintStream printStream;
-    private final ProgramExiter programExiter;
 
     public DrawingProgram() {
         this(System.out, () -> System.exit(0));
     }
 
-    public interface ProgramExiter {
-        void exit();
-    }
-
     public DrawingProgram(PrintStream printStream, ProgramExiter programExiter) {
         this.printStream = printStream;
-        this.programExiter = programExiter;
-        this.commandCenter = new CommandCenter(canvas);
+        this.commandCenter = new CommandCenter(canvas, programExiter);
     }
 
     public void enterCommand(String command) {
-        if(command.equals("Q")) {
-            programExiter.exit();
-            return;
-        }
-
         try {
-            commandCenter.buildCommand(command).draw(command.substring(2));
+            commandCenter.buildCommand(command).draw(command.substring(1).trim());
             canvas.printCanvas(printStream);
         } catch (Exception e) {
             printStream.println(e.getMessage());

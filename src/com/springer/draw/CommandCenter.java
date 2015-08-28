@@ -1,5 +1,7 @@
 package com.springer.draw;
 
+import com.springer.draw.commands.*;
+
 import java.util.HashMap;
 import java.util.Map;
 

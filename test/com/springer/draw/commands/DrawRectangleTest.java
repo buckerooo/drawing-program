@@ -1,9 +1,10 @@
-package com.springer.draw;
+package com.springer.draw.commands;
 
+import com.springer.draw.Canvas;
 import org.junit.Test;
 
-import static com.springer.draw.DrawRectangle.INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE;
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
+import static com.springer.draw.commands.DrawRectangle.INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE;
 
 public class DrawRectangleTest {
     @Test

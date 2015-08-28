@@ -1,5 +1,6 @@
 package com.springer.draw;
 
+import com.springer.draw.commands.*;
 import org.junit.Test;
 
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;

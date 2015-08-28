@@ -1,4 +1,6 @@
-package com.springer.draw;
+package com.springer.draw.commands;
+
+import com.springer.draw.ProgramExiter;
 
 public class QuitCommand implements DrawCommand {
     private final ProgramExiter exiter;

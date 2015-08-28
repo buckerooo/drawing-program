@@ -1,9 +1,10 @@
-package com.springer.draw;
+package com.springer.draw.commands;
 
+import com.springer.draw.Canvas;
 import org.junit.Test;
 
-import static com.springer.draw.CreateCanvas.INVALID_CREATE_CANVAS_INPUTS_MESSAGE;
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
+import static com.springer.draw.commands.CreateCanvas.INVALID_CREATE_CANVAS_INPUTS_MESSAGE;
 
 public class CreateCanvasTest {
 

@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.springer.draw.CreateCanvas.CREATE_CANVAS_COMMAND;
+import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 
 public class Canvas {
     private List<List<Character>> canvas = new ArrayList<>();

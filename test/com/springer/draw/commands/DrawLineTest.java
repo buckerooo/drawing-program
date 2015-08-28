@@ -1,9 +1,11 @@
-package com.springer.draw;
+package com.springer.draw.commands;
 
+import com.springer.draw.Canvas;
+import com.springer.draw.Point;
 import org.junit.Test;
 
-import static com.springer.draw.DrawLine.INVALID_DRAW_LINE_INPUTS_MESSAGE;
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
+import static com.springer.draw.commands.DrawLine.INVALID_DRAW_LINE_INPUTS_MESSAGE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 

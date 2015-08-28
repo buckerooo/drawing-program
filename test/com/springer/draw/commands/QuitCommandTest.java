@@ -1,5 +1,6 @@
-package com.springer.draw;
+package com.springer.draw.commands;
 
+import com.springer.draw.ProgramExiter;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;

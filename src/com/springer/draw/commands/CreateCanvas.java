@@ -1,4 +1,6 @@
-package com.springer.draw;
+package com.springer.draw.commands;
+
+import com.springer.draw.Canvas;
 
 import static com.springer.draw.InputsHelper.positiveIntValueFrom;
 

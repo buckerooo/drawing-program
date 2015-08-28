@@ -2,8 +2,8 @@ package com.springer.draw;
 
 import org.junit.Test;
 
-import static com.springer.draw.CreateCanvas.CREATE_CANVAS_COMMAND;
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
+import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 
 public class CanvasTest {
 

@@ -15,6 +15,15 @@ public class CanvasTest {
     }
 
     @Test
+    public void cannotCreateACanvasThe() {
+        Canvas canvas = new Canvas();
+
+        canvas.create(10, 5);
+
+        willThrowExceptionWithMessage((x) -> canvas.create(10, 5), "Unable to create a canvas as one as already been created");
+    }
+
+    @Test
     public void cannotDrawOnTheEdgeOfTheCanvas() {
         Canvas canvas = new Canvas();
         canvas.create(10, 5);

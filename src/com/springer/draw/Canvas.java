@@ -10,6 +10,10 @@ public class Canvas {
     private List<List<Character>> canvas = new ArrayList<>();
 
     public void create(int width, int height) {
+        if(!canvas.isEmpty()) {
+            throw new IllegalArgumentException("Unable to create a canvas as one as already been created");
+        }
+
         canvas.add(charsOfSize(width + 2, '-'));
 
         for(int rowPosition = 1; rowPosition <= height; rowPosition++) {

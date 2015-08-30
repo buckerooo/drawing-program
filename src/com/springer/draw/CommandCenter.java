@@ -28,8 +28,13 @@ public class CommandCenter {
             }
         });
         this.drawOptions.put("L", inputs -> {
-            if (compile("L ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs).matches()) {
-                return new DrawLine(canvas);
+            Matcher matcher = compile("L ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs);
+            if (matcher.matches()) {
+                Integer x1 = Integer.valueOf(matcher.group(1));
+                Integer y1 = Integer.valueOf(matcher.group(2));
+                Integer x2 = Integer.valueOf(matcher.group(3));
+                Integer y2 = Integer.valueOf(matcher.group(4));
+                return new DrawLine(x1, y1, x2, y2, canvas);
             } else {
                 throw new IllegalArgumentException("Invalid command: to draw a line you must provide x1 y1 x2 y2. Example 'L 1 2 6 2'");
             }

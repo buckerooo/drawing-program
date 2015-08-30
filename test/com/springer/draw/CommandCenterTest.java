@@ -117,7 +117,14 @@ public class CommandCenterTest {
 
     @Test
     public void canCreateAQuitCommand() {
-        assertThat(new CommandCenter(new Canvas(), ()->{}).buildCommand("Q"), instanceOf(QuitCommand.class));
-        assertThat(new CommandCenter(new Canvas(), ()->{}).buildCommand("q"), instanceOf(QuitCommand.class));
+        assertThat(new CommandCenter(new Canvas(), () -> {
+        }).buildCommand("Q"), instanceOf(QuitCommand.class));
+        assertThat(new CommandCenter(new Canvas(), () -> {
+        }).buildCommand("q"), instanceOf(QuitCommand.class));
+    }
+
+    @Test
+    public void blowsUpIfYouPassInAUnknownCommand() {
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas(), programExiter).buildCommand("F"), "The command 'F' is not supported");
     }
 }

@@ -18,6 +18,7 @@ public class DrawingProgram {
             commandCenter.buildCommand(command).draw();
             canvas.printCanvas(printStream);
         } catch (Exception e) {
+            e.printStackTrace();
             printStream.println(e.getMessage());
         }
 

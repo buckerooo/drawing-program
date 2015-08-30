@@ -74,6 +74,13 @@ public class CommandCenter {
             throw new IllegalArgumentException("A command must be provided");
         }
 
-        return drawOptions.get(input.split(" ")[0].toUpperCase()).create(input);
+        String command = input.split(" ")[0];
+        CommandBuilder commandBuilder = drawOptions.get(command.toUpperCase());
+
+        if(commandBuilder == null) {
+            throw new IllegalArgumentException("The command '" + command  + "' is not supported");
+        }
+
+        return commandBuilder.create(input);
     }
 }

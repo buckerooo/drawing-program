@@ -15,8 +15,6 @@ public class DrawRectangleTest {
 
         new DrawRectangle(2, 2, 5, 4, canvas).draw("");
 
-        canvas.printCanvas(System.out);
-
         /* top line */
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
         assertThat(canvas.atPoint(new Point(3, 2)), equalTo('x'));

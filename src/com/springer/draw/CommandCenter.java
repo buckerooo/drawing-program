@@ -53,8 +53,12 @@ public class CommandCenter {
         });
         this.drawOptions.put("B", inputs -> {
             /* todo: the pattern only picks out the first char for the fill. Look into blowing up */
-            if (compile("B ([1-9]\\d*) ([1-9]\\d*) (\\w{1})").matcher(inputs).matches()) {
-                return new FillArea(canvas);
+            Matcher matcher = compile("B ([1-9]\\d*) ([1-9]\\d*) (\\w{1})").matcher(inputs);
+            if (matcher.matches()) {
+                Integer x = Integer.valueOf(matcher.group(1));
+                Integer y = Integer.valueOf(matcher.group(2));
+                char fill = matcher.group(3).charAt(0);
+                return new FillArea(x, y, fill, canvas);
             } else {
                 throw new IllegalArgumentException("Invalid command: to fill an area you must provide B x y c . Example 'B 10 3 o'");
             }

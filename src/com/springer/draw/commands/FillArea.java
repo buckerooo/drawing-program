@@ -6,20 +6,20 @@ import com.springer.draw.Point;
 import java.util.Stack;
 
 public class FillArea implements DrawCommand {
+    private final Integer x;
+    private final Integer y;
+    private final char fillColor;
     private final Canvas canvas;
 
-    public FillArea(Canvas canvas) {
+    public FillArea(Integer x, Integer y, char fillColor, Canvas canvas) {
+        this.x = x;
+        this.y = y;
+        this.fillColor = fillColor;
         this.canvas = canvas;
     }
 
     @Override
     public void draw(String command) {
-        String[] positions = command.split(" ");
-
-        int x = Integer.valueOf(positions[0]);
-        int y = Integer.valueOf(positions[1]);
-        char fillColor = positions[2].charAt(0);
-
         Stack<Point> stack = new Stack<>();
         stack.push(new Point(x, y));
 
@@ -34,6 +34,5 @@ public class FillArea implements DrawCommand {
                 stack.push(new Point(point.x - 1, point.y));
             }
         }
-
     }
 }

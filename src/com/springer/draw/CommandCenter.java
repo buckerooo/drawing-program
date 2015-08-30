@@ -4,6 +4,7 @@ import com.springer.draw.commands.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 import static java.util.regex.Pattern.compile;
 
@@ -17,8 +18,11 @@ public class CommandCenter {
         /* note: this would not support a user entering 02 for example as a number */
 
         this.drawOptions.put("C", inputs -> {
-            if (compile("C ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs).matches()) {
-                return new CreateCanvas(canvas);
+            Matcher matcher = compile("C ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs);
+            if (matcher.matches()) {
+                Integer x = Integer.valueOf(matcher.group(1));
+                Integer y = Integer.valueOf(matcher.group(2));
+                return new CreateCanvas(x, y, canvas);
             } else {
                 throw new IllegalArgumentException("Invalid command: to create a canvas you must provide 2 positive integers. Example 'C 5 10'");
             }

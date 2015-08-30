@@ -17,7 +17,7 @@ public class CreateCanvas implements DrawCommand {
     }
 
     @Override
-    public void draw(String command) {
+    public void draw() {
         canvas.create(width, height);
     }
 }

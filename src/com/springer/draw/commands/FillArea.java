@@ -19,7 +19,7 @@ public class FillArea implements DrawCommand {
     }
 
     @Override
-    public void draw(String command) {
+    public void draw() {
         Stack<Point> stack = new Stack<>();
         stack.push(new Point(x, y));
 

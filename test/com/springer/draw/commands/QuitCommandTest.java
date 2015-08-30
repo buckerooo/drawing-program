@@ -17,6 +17,6 @@ public class QuitCommandTest {
         context.checking(new Expectations(){{
             oneOf(exiter).exit();
         }});
-        new QuitCommand(exiter).draw("Q");
+        new QuitCommand(exiter).draw();
     }
 }

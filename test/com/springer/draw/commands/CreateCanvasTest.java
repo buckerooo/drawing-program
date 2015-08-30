@@ -11,7 +11,7 @@ public class CreateCanvasTest {
     @Test
     public void canCreateANewCanvas() {
         Canvas canvas = new Canvas();
-        new CreateCanvas(5 ,5, canvas).draw("");
+        new CreateCanvas(5 ,5, canvas).draw();
 
         assertTrue(canvas.isEmptySpace(new Point(1, 1)));
         assertTrue(canvas.isEmptySpace(new Point(5, 5)));

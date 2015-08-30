@@ -10,7 +10,7 @@ public class QuitCommand implements DrawCommand {
     }
 
     @Override
-    public void draw(String command) {
+    public void draw() {
         exiter.exit();
     }
 }

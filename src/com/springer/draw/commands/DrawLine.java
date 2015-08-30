@@ -21,7 +21,7 @@ public class DrawLine implements DrawCommand {
     }
 
     @Override
-    public void draw(String command) {
+    public void draw() {
         if(!x1.equals(x2) && !y1.equals(y2)) {
             throw new UnsupportedOperationException("To draw a line either the x's or the y's must have the same value.");
         }

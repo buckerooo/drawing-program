@@ -13,7 +13,7 @@ public class DrawRectangleTest {
         Canvas canvas = new Canvas();
         canvas.create(10, 10);
 
-        new DrawRectangle(2, 2, 5, 4, canvas).draw("");
+        new DrawRectangle(2, 2, 5, 4, canvas).draw();
 
         /* top line */
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));

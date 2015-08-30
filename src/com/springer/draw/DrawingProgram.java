@@ -22,7 +22,7 @@ public class DrawingProgram {
 
     public void enterCommand(String command) {
         try {
-            commandCenter.buildCommand(command).draw(command.substring(1).trim());
+            commandCenter.buildCommand(command).draw();
             canvas.printCanvas(printStream);
         } catch (Exception e) {
             printStream.println(e.getMessage());

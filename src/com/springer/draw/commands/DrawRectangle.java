@@ -21,7 +21,7 @@ public class DrawRectangle implements DrawCommand {
     }
 
     @Override
-    public void draw(String command) {
+    public void draw() {
         char fillChar = 'x';
 
         canvas.fill(new Point(upperLeftX, upperLeftY), new Point(upperLeftX, lowerRightY), fillChar);

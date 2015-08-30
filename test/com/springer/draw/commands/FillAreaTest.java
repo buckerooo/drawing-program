@@ -18,7 +18,7 @@ public class FillAreaTest {
         Canvas canvas = new Canvas();
         canvas.create(width, height);
 
-        new FillArea(1, 1, 'o', canvas).draw("");
+        new FillArea(1, 1, 'o', canvas).draw();
 
         for (int x = 1; x < width; x++) {
             for (int y = 1; y < height; y++) {

@@ -12,8 +12,15 @@ public class CommandCenterTest {
     private ProgramExiter programExiter = () -> {};
 
     @Test
+    public void blowsUpIfNoCommandIsProvided() {
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas(), programExiter).buildCommand(""), "A command must be provided");
+        willThrowExceptionWithMessage((x) -> new CommandCenter(new Canvas(), programExiter).buildCommand("  "), "A command must be provided");
+    }
+
+    @Test
     public void canCreateACanvasCommandGivenValidInputs() {
         assertThat(new CommandCenter(new Canvas(), programExiter).buildCommand("C 5 10"), instanceOf(CreateCanvas.class));
+        assertThat(new CommandCenter(new Canvas(), programExiter).buildCommand("c 5 10"), instanceOf(CreateCanvas.class));
     }
 
     @Test
@@ -31,6 +38,7 @@ public class CommandCenterTest {
     @Test
     public void canCreateDrawLineCommandGivenValidInputs() {
         assertThat(new CommandCenter(new Canvas(), programExiter).buildCommand("L 1 2 6 2"), instanceOf(DrawLine.class));
+        assertThat(new CommandCenter(new Canvas(), programExiter).buildCommand("l 1 2 6 2"), instanceOf(DrawLine.class));
     }
 
     @Test
@@ -59,6 +67,7 @@ public class CommandCenterTest {
     @Test
     public void canCreateDrawRectangleCommandGivenValidInputs() {
         assertThat(new CommandCenter(new Canvas(), programExiter).buildCommand("R 16 1 20 3"), instanceOf(DrawRectangle.class));
+        assertThat(new CommandCenter(new Canvas(), programExiter).buildCommand("r 16 1 20 3"), instanceOf(DrawRectangle.class));
     }
 
     @Test
@@ -87,6 +96,7 @@ public class CommandCenterTest {
     @Test
     public void canCreateFillAreaCommandGivenValidInputs() {
         assertThat(new CommandCenter(new Canvas(), programExiter).buildCommand("B 10 3 o"), instanceOf(FillArea.class));
+        assertThat(new CommandCenter(new Canvas(), programExiter).buildCommand("b 10 3 o"), instanceOf(FillArea.class));
     }
 
     @Test
@@ -108,5 +118,6 @@ public class CommandCenterTest {
     @Test
     public void canCreateAQuitCommand() {
         assertThat(new CommandCenter(new Canvas(), ()->{}).buildCommand("Q"), instanceOf(QuitCommand.class));
+        assertThat(new CommandCenter(new Canvas(), ()->{}).buildCommand("q"), instanceOf(QuitCommand.class));
     }
 }

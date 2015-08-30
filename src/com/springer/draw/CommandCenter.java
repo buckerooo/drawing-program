@@ -6,19 +6,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
 
 public class CommandCenter {
 
     private final Map<String, CommandBuilder> drawOptions = new HashMap<>();
 
-    /* todo: do i want to support upper and lower case chars */
-
     public CommandCenter(Canvas canvas, ProgramExiter programExiter) {
         /* note: this would not support a user entering 02 for example as a number */
 
         this.drawOptions.put("C", inputs -> {
-            Matcher matcher = compile("C ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs);
+            Matcher matcher = compile("C ([1-9]\\d*) ([1-9]\\d*)", CASE_INSENSITIVE).matcher(inputs);
             if (matcher.matches()) {
                 Integer x = Integer.valueOf(matcher.group(1));
                 Integer y = Integer.valueOf(matcher.group(2));
@@ -28,7 +27,7 @@ public class CommandCenter {
             }
         });
         this.drawOptions.put("L", inputs -> {
-            Matcher matcher = compile("L ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs);
+            Matcher matcher = compile("L ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*)", CASE_INSENSITIVE).matcher(inputs);
             if (matcher.matches()) {
                 Integer x1 = Integer.valueOf(matcher.group(1));
                 Integer y1 = Integer.valueOf(matcher.group(2));
@@ -40,7 +39,7 @@ public class CommandCenter {
             }
         });
         this.drawOptions.put("R", inputs -> {
-            Matcher matcher = compile("R ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs);
+            Matcher matcher = compile("R ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*)", CASE_INSENSITIVE).matcher(inputs);
             if (matcher.matches()) {
                 Integer upperLeftX = Integer.valueOf(matcher.group(1));
                 Integer upperLeftY = Integer.valueOf(matcher.group(2));
@@ -53,7 +52,7 @@ public class CommandCenter {
         });
         this.drawOptions.put("B", inputs -> {
             /* todo: the pattern only picks out the first char for the fill. Look into blowing up */
-            Matcher matcher = compile("B ([1-9]\\d*) ([1-9]\\d*) (\\w{1})").matcher(inputs);
+            Matcher matcher = compile("B ([1-9]\\d*) ([1-9]\\d*) (\\w{1})", CASE_INSENSITIVE).matcher(inputs);
             if (matcher.matches()) {
                 Integer x = Integer.valueOf(matcher.group(1));
                 Integer y = Integer.valueOf(matcher.group(2));
@@ -71,8 +70,10 @@ public class CommandCenter {
     }
 
     public DrawCommand buildCommand(String input) {
-        String command = input.split(" ")[0];
+        if(input.trim().isEmpty()) {
+            throw new IllegalArgumentException("A command must be provided");
+        }
 
-        return drawOptions.get(command).create(input);
+        return drawOptions.get(input.split(" ")[0].toUpperCase()).create(input);
     }
 }

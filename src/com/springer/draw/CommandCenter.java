@@ -40,8 +40,13 @@ public class CommandCenter {
             }
         });
         this.drawOptions.put("R", inputs -> {
-            if (compile("R ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs).matches()) {
-                return new DrawRectangle(canvas);
+            Matcher matcher = compile("R ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*) ([1-9]\\d*)").matcher(inputs);
+            if (matcher.matches()) {
+                Integer upperLeftX = Integer.valueOf(matcher.group(1));
+                Integer upperLeftY = Integer.valueOf(matcher.group(2));
+                Integer lowerRightX = Integer.valueOf(matcher.group(3));
+                Integer lowerRightY = Integer.valueOf(matcher.group(4));
+                return new DrawRectangle(upperLeftX, upperLeftY, lowerRightX, lowerRightY, canvas);
             } else {
                 throw new IllegalArgumentException("Invalid command: to draw a rectangle you must provide x1 y1 x2 y2. Example 'R 16 1 20 3'");
             }

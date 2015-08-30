@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -142,12 +143,16 @@ public class DrawingProgramTest {
         ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
 
         DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), ()->{});
-        drawingProgram.enterCommand("C 20 4");
 
+        /* check we see message when the canvas has not been created yet */
+        drawingProgram.enterCommand("B 10 10 a");
+        assertThat(actualOutput.toString(), equalTo("Unable to draw on a blank canvas, please create canvas first using " + CREATE_CANVAS_COMMAND + "\n"));
+
+        /* and when we try and provide an invalid command */
+        drawingProgram.enterCommand("C 20 4");
         actualOutput.reset();
 
         drawingProgram.enterCommand("L 1 2 3 4");
-
         assertThat(actualOutput.toString(), equalTo("To draw a line either the x's or the y's must have the same value.\n"));
     }
 }

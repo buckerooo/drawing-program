@@ -45,6 +45,7 @@ public class Canvas {
     }
 
     public boolean isEmptySpace(Point point) {
+        hasCanvasBeenCreated();
         return canvas.get(point.y).get(point.x) == ' ';
     }
 

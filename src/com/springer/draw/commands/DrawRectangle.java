@@ -10,8 +10,6 @@ public class DrawRectangle implements DrawCommand {
     private final Integer lowerRightY;
     private final Canvas canvas;
 
-    public static final String INVALID_DRAW_RECTANGLE_INPUTS_MESSAGE = "Creating a rectangle must match (R x1 y1 x2 y2), where x and y values are all integer values";
-
     public DrawRectangle(Integer upperLeftX, Integer upperLeftY, Integer lowerRightX, Integer lowerRightY, Canvas canvas) {
         this.upperLeftX = upperLeftX;
         this.upperLeftY = upperLeftY;

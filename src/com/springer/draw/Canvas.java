@@ -9,10 +9,16 @@ import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 public class Canvas {
     private List<List<Character>> canvas = new ArrayList<>();
 
+    private int width;
+    private int height;
+
     public void create(int width, int height) {
         if(!canvas.isEmpty()) {
             throw new IllegalArgumentException("Unable to create a canvas as one as already been created");
         }
+
+        this.width = width;
+        this.height = height;
 
         for(int rowPosition = 0; rowPosition < height; rowPosition++) {
             List<Character> row = new ArrayList<>();
@@ -44,7 +50,7 @@ public class Canvas {
     }
 
     public void printCanvas(PrintStream printStream) {
-        printStream.print(charXTimes(canvas.get(0).size() + 2, '-'));
+        printStream.print(charXTimes(width + 2, '-'));
         printStream.print("\n");
         canvas.iterator().forEachRemaining(characters -> {
             printStream.print("|");
@@ -52,7 +58,7 @@ public class Canvas {
             printStream.print("|");
             printStream.print("\n");
         });
-        printStream.print(charXTimes(canvas.get(0).size() + 2, '-'));
+        printStream.print(charXTimes(width + 2, '-'));
         printStream.print("\n");
     }
 
@@ -66,7 +72,7 @@ public class Canvas {
 
     public boolean isOnCanvas(Point point) {
         hasCanvasBeenCreated();
-        return point.x > 0 && point.y > 0 && point.y <= canvas.size() && point.x <= canvas.get(0).size();
+        return point.x > 0 && point.y > 0 && point.y <= height && point.x <= width;
     }
 
     private void hasCanvasBeenCreated() {
@@ -76,12 +82,10 @@ public class Canvas {
     }
 
     private void arePointsWithinBounds(Point from, Point to) {
-        int maximumX = canvas.get(0).size();
-        int maximumY = canvas.size();
         if(from.x == 0 || from.y == 0 || to.x == 0 || to.y == 0 ||
-                from.x > maximumX || to.x > maximumX ||
-                from.y > maximumY || to.y > maximumY) {
-            throw new UnsupportedOperationException("Unable to draw out of canvas, bounds are (1,1) to (" + maximumX + "," + maximumY + ")");
+                from.x > width || to.x > width ||
+                from.y > height || to.y > height) {
+            throw new UnsupportedOperationException("Unable to draw out of canvas, bounds are (1,1) to (" + width + "," + height + ")");
         }
     }
 

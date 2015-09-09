@@ -63,6 +63,60 @@ public class CanvasTest {
     }
 
     @Test
+    public void canFillALineFromTopToBottomOnTheCanvas() {
+        Canvas canvas = new Canvas();
+
+        canvas.create(4, 4);
+
+        canvas.fill(new Point(2, 1), new Point(2, 4), 'x');
+
+        assertThat(canvas.atPoint(new Point(2, 1)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 3)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 4)), equalTo('x'));
+    }
+
+    @Test
+    public void canFillALineFromBottomToTopOnTheCanvas() {
+        Canvas canvas = new Canvas();
+
+        canvas.create(4, 4);
+
+        canvas.fill(new Point(2, 4), new Point(2, 1), 'x');
+
+        assertThat(canvas.atPoint(new Point(2, 1)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 3)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 4)), equalTo('x'));
+    }
+
+    @Test
+    public void canFillALineFromLeftToRightOnTheCanvas() {
+        Canvas canvas = new Canvas();
+
+        canvas.create(4, 4);
+
+        canvas.fill(new Point(2, 2), new Point(4, 2), 'x');
+
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(3, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(4, 2)), equalTo('x'));
+    }
+
+    @Test
+    public void canFillALineFromRightToLeftOnTheCanvas() {
+        Canvas canvas = new Canvas();
+
+        canvas.create(4, 4);
+
+        canvas.fill(new Point(2, 2), new Point(4, 2), 'x');
+
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(3, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(4, 2)), equalTo('x'));
+    }
+
+    @Test
     public void cannotDrawOnTheEdgeOfTheCanvas() {
         Canvas canvas = new Canvas();
         canvas.create(10, 5);

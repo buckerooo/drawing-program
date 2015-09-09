@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
 import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class CanvasTest {
 
@@ -21,6 +24,39 @@ public class CanvasTest {
         canvas.create(10, 5);
 
         willThrowExceptionWithMessage((x) -> canvas.create(10, 5), "Unable to create a canvas as one as already been created");
+    }
+
+    @Test
+    public void canFillInASinglePointOnTheCanvas() {
+        Canvas canvas = new Canvas();
+
+        canvas.create(3, 3);
+
+        canvas.fill(new Point(2, 2), 'x');
+
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
+        assertTrue(canvas.isEmptySpace(new Point(1, 2)));
+        assertTrue(canvas.isEmptySpace(new Point(2, 1)));
+        assertTrue(canvas.isEmptySpace(new Point(3, 2)));
+        assertTrue(canvas.isEmptySpace(new Point(2, 3)));
+    }
+
+    @Test
+    public void canFillInAnAreaOnTheCanvas() {
+        Canvas canvas = new Canvas();
+
+        canvas.create(4, 4);
+
+        canvas.fill(new Point(2, 2), new Point(3, 3), 'x');
+
+        assertTrue(canvas.isEmptySpace(new Point(1, 2)));
+        assertTrue(canvas.isEmptySpace(new Point(2, 1)));
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(3, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(3, 3)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 3)), equalTo('x'));
+        assertTrue(canvas.isEmptySpace(new Point(4, 3)));
+        assertTrue(canvas.isEmptySpace(new Point(3, 4)));
     }
 
     @Test

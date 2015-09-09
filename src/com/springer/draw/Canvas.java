@@ -14,17 +14,11 @@ public class Canvas {
             throw new IllegalArgumentException("Unable to create a canvas as one as already been created");
         }
 
-        canvas.add(charsOfSize(width + 2, '-'));
-
-        for(int rowPosition = 1; rowPosition <= height; rowPosition++) {
+        for(int rowPosition = 0; rowPosition < height; rowPosition++) {
             List<Character> row = new ArrayList<>();
-            row.addAll(charsOfSize(1, '|'));
             row.addAll(charsOfSize(width, ' '));
-            row.addAll(charsOfSize(1, '|'));
             canvas.add(rowPosition, row);
         }
-
-        canvas.add(height + 1, charsOfSize(width + 2, '-'));
     }
 
     public void fill(Point from, Point to, char x) {
@@ -36,8 +30,8 @@ public class Canvas {
         Point leftPoint = from.x < to.x ? from : to;
         Point rightPoint = from.x > to.x ? from : to;
 
-        List<List<Character>> allRowsThatNeedABitOfFilling = canvas.subList(topPoint.y, bottomPoint.y + 1);
-        allRowsThatNeedABitOfFilling.forEach(row1 -> row1.subList(leftPoint.x, rightPoint.x + 1).replaceAll(character -> x));
+        List<List<Character>> allRowsThatNeedABitOfFilling = canvas.subList(topPoint.y - 1, bottomPoint.y);
+        allRowsThatNeedABitOfFilling.forEach(row1 -> row1.subList(leftPoint.x - 1, rightPoint.x).replaceAll(character -> x));
     }
 
     public void fill(Point point, char fillColor) {
@@ -46,14 +40,33 @@ public class Canvas {
 
     public boolean isEmptySpace(Point point) {
         hasCanvasBeenCreated();
-        return canvas.get(point.y).get(point.x) == ' ';
+        return canvas.get(point.y - 1).get(point.x -1 ) == ' ';
     }
 
     public void printCanvas(PrintStream printStream) {
+        printStream.print(charXTimes(canvas.get(0).size() + 2, '-'));
+        printStream.print("\n");
         canvas.iterator().forEachRemaining(characters -> {
+            printStream.print("|");
             characters.iterator().forEachRemaining(printStream::print);
+            printStream.print("|");
             printStream.print("\n");
         });
+        printStream.print(charXTimes(canvas.get(0).size() + 2, '-'));
+        printStream.print("\n");
+    }
+
+    private String charXTimes(int numberOfCoppies, char character) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < numberOfCoppies; i++) {
+            stringBuilder.append(character);
+        }
+        return stringBuilder.toString();
+    }
+
+    public boolean isOnCanvas(Point point) {
+        hasCanvasBeenCreated();
+        return point.x > 0 && point.y > 0 && point.y <= canvas.size() && point.x <= canvas.get(0).size();
     }
 
     private void hasCanvasBeenCreated() {
@@ -63,8 +76,8 @@ public class Canvas {
     }
 
     private void arePointsWithinBounds(Point from, Point to) {
-        int maximumX = canvas.get(0).size() - 2;
-        int maximumY = canvas.size() - 2;
+        int maximumX = canvas.get(0).size();
+        int maximumY = canvas.size();
         if(from.x == 0 || from.y == 0 || to.x == 0 || to.y == 0 ||
                 from.x > maximumX || to.x > maximumX ||
                 from.y > maximumY || to.y > maximumY) {
@@ -83,6 +96,6 @@ public class Canvas {
     }
 
     public char atPoint(Point point) {
-        return canvas.get(point.y).get(point.x);
+        return canvas.get(point.y - 1).get(point.x - 1);
     }
 }

@@ -8,8 +8,7 @@ import java.io.PrintStream;
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
 import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CanvasTest {
 
@@ -60,6 +59,22 @@ public class CanvasTest {
         assertThat(canvas.atPoint(new Point(2, 3)), equalTo('x'));
         assertTrue(canvas.isEmptySpace(new Point(4, 3)));
         assertTrue(canvas.isEmptySpace(new Point(3, 4)));
+    }
+
+    @Test
+    public void canSeeIfAPointIsOnTheCanvas() {
+        Canvas canvas = new Canvas();
+
+        canvas.create(4, 4);
+
+        assertFalse(canvas.isOnCanvas(new Point(0, 0)));
+        assertFalse(canvas.isOnCanvas(new Point(0, 1)));
+        assertFalse(canvas.isOnCanvas(new Point(1, 0)));
+        assertFalse(canvas.isOnCanvas(new Point(4, 5)));
+        assertFalse(canvas.isOnCanvas(new Point(5, 4)));
+
+        assertTrue(canvas.isOnCanvas(new Point(4, 4)));
+        assertTrue(canvas.isOnCanvas(new Point(1, 1)));
     }
 
     @Test

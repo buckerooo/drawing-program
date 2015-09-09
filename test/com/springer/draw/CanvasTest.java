@@ -2,6 +2,9 @@ package com.springer.draw;
 
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
 import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 import static org.hamcrest.Matchers.equalTo;
@@ -68,6 +71,23 @@ public class CanvasTest {
         willThrowExceptionWithMessage((x) -> canvas.fill(new Point(1, 0), 'x'), "Unable to draw out of canvas, bounds are (1,1) to (10,5)");
         willThrowExceptionWithMessage((x) -> canvas.fill(new Point(11, 1), 'x'), "Unable to draw out of canvas, bounds are (1,1) to (10,5)");
         willThrowExceptionWithMessage((x) -> canvas.fill(new Point(9, 6), 'x'), "Unable to draw out of canvas, bounds are (1,1) to (10,5)");
+    }
+
+    @Test
+    public void whenPrintingTheCanvasInSticksABorderRoundTheEdge() {
+        Canvas canvas = new Canvas();
+        canvas.create(4, 2);
+
+        String expectedOutput =
+                        "------\n" +
+                        "|    |\n" +
+                        "|    |\n" +
+                        "------\n";
+
+        ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
+        canvas.printCanvas(new PrintStream(actualOutput));
+
+        assertThat(actualOutput.toString(), equalTo(expectedOutput));
     }
 
 }

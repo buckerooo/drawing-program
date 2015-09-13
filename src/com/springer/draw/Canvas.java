@@ -1,29 +1,26 @@
 package com.springer.draw;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 
 public class Canvas {
-    private List<List<Character>> canvas = new ArrayList<>();
-
+    private Character[][] canvas;
     private int width;
     private int height;
 
     public void create(int width, int height) {
-        if(!canvas.isEmpty()) {
+        if(canvas != null) {
             throw new IllegalArgumentException("Unable to create a canvas as one as already been created");
         }
 
         this.width = width;
         this.height = height;
 
+        this.canvas = new Character[height][width];
+
         for(int rowPosition = 0; rowPosition < height; rowPosition++) {
-            List<Character> row = new ArrayList<>();
-            row.addAll(charsOfSize(width, ' '));
-            canvas.add(rowPosition, row);
+            canvas[rowPosition] = new Character[width];
         }
     }
 
@@ -36,8 +33,11 @@ public class Canvas {
         Point leftPoint = from.x < to.x ? from : to;
         Point rightPoint = from.x > to.x ? from : to;
 
-        List<List<Character>> allRowsThatNeedABitOfFilling = canvas.subList(topPoint.y - 1, bottomPoint.y);
-        allRowsThatNeedABitOfFilling.forEach(row1 -> row1.subList(leftPoint.x - 1, rightPoint.x).replaceAll(character -> x));
+        for (int row = topPoint.y - 1; row < bottomPoint.y; row++) {
+            for(int cell = leftPoint.x - 1; cell < rightPoint.x; cell++) {
+                canvas[row][cell] = x;
+            }
+        }
     }
 
     public void fill(Point point, char fillColor) {
@@ -46,18 +46,23 @@ public class Canvas {
 
     public boolean isEmptySpace(Point point) {
         hasCanvasBeenCreated();
-        return canvas.get(point.y - 1).get(point.x -1 ) == ' ';
+        return canvas[point.y - 1][point.x -1] == null;
     }
 
     public void printCanvas(PrintStream printStream) {
         printStream.print(charXTimes(width + 2, '-'));
         printStream.print("\n");
-        canvas.iterator().forEachRemaining(characters -> {
+
+        for(int row = 0; row < height; row++) {
             printStream.print("|");
-            characters.iterator().forEachRemaining(printStream::print);
+            for(int cell = 0; cell < width; cell++) {
+                Character character = canvas[row][cell];
+                printStream.print(character == null ? ' ' : character);
+            }
             printStream.print("|");
             printStream.print("\n");
-        });
+        }
+
         printStream.print(charXTimes(width + 2, '-'));
         printStream.print("\n");
     }
@@ -76,7 +81,7 @@ public class Canvas {
     }
 
     private void hasCanvasBeenCreated() {
-        if (canvas.size() == 0) {
+        if (canvas == null) {
             throw new UnsupportedOperationException("Unable to draw on a blank canvas, please create canvas first using " + CREATE_CANVAS_COMMAND);
         }
     }
@@ -89,17 +94,7 @@ public class Canvas {
         }
     }
 
-    private List<Character> charsOfSize(int width, char c) {
-        List<Character> chars = new ArrayList<>();
-
-        for(int x = 0; x < width; x++) {
-            chars.add(c);
-        }
-
-        return chars;
-    }
-
     public char atPoint(Point point) {
-        return canvas.get(point.y - 1).get(point.x - 1);
+        return canvas[point.y - 1][point.x - 1];
     }
 }

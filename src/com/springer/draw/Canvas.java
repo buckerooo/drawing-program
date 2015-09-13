@@ -2,8 +2,6 @@ package com.springer.draw;
 
 import java.io.PrintStream;
 
-import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
-
 public class Canvas {
     private final Character[][] canvas;
     private final int width;
@@ -21,7 +19,6 @@ public class Canvas {
     }
 
     public void fill(Point from, Point to, char x) {
-        hasCanvasBeenCreated();
         arePointsWithinBounds(from, to);
 
         Point topPoint = from.y < to.y ? from : to;
@@ -71,14 +68,7 @@ public class Canvas {
     }
 
     public boolean isOnCanvas(Point point) {
-        hasCanvasBeenCreated();
         return point.x > 0 && point.y > 0 && point.y <= height && point.x <= width;
-    }
-
-    private void hasCanvasBeenCreated() {
-        if (canvas == null) {
-            throw new UnsupportedOperationException("Unable to draw on a blank canvas, please create canvas first using " + CREATE_CANVAS_COMMAND);
-        }
     }
 
     private void arePointsWithinBounds(Point from, Point to) {

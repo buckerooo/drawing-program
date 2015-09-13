@@ -1,6 +1,9 @@
 package com.springer.draw.commands;
 
+import com.springer.draw.Canvas;
 import com.springer.draw.ProgramExiter;
+
+import java.util.Optional;
 
 public class QuitCommand implements DrawCommand {
     private final ProgramExiter exiter;
@@ -10,7 +13,8 @@ public class QuitCommand implements DrawCommand {
     }
 
     @Override
-    public void draw() {
+    public Canvas draw(Optional<Canvas> canvas) {
         exiter.exit();
+        return null;
     }
 }

@@ -13,7 +13,7 @@ public class CommandCenter {
 
     private final Map<String, CommandBuilder> drawOptions = new HashMap<>();
 
-    public CommandCenter(Canvas canvas, ProgramExiter programExiter) {
+    public CommandCenter(ProgramExiter programExiter) {
         /* note: this would not support a user entering 02 for example as a number */
 
         this.drawOptions.put("C", inputs -> {
@@ -21,7 +21,8 @@ public class CommandCenter {
             if (matcher.matches()) {
                 Integer x = Integer.valueOf(matcher.group(1));
                 Integer y = Integer.valueOf(matcher.group(2));
-                return new CreateCanvas(x, y, canvas);
+
+                return new CreateCanvas(x, y);
             } else {
                 throw new IllegalArgumentException("Invalid command: to create a canvas you must provide 2 positive integers. Example 'C 5 10'");
             }
@@ -33,7 +34,7 @@ public class CommandCenter {
                 Integer y1 = Integer.valueOf(matcher.group(2));
                 Integer x2 = Integer.valueOf(matcher.group(3));
                 Integer y2 = Integer.valueOf(matcher.group(4));
-                return new DrawLine(x1, y1, x2, y2, canvas);
+                return new DrawLine(x1, y1, x2, y2);
             } else {
                 throw new IllegalArgumentException("Invalid command: to draw a line you must provide x1 y1 x2 y2. Example 'L 1 2 6 2'");
             }
@@ -45,7 +46,7 @@ public class CommandCenter {
                 Integer upperLeftY = Integer.valueOf(matcher.group(2));
                 Integer lowerRightX = Integer.valueOf(matcher.group(3));
                 Integer lowerRightY = Integer.valueOf(matcher.group(4));
-                return new DrawRectangle(upperLeftX, upperLeftY, lowerRightX, lowerRightY, canvas);
+                return new DrawRectangle(upperLeftX, upperLeftY, lowerRightX, lowerRightY);
             } else {
                 throw new IllegalArgumentException("Invalid command: to draw a rectangle you must provide x1 y1 x2 y2. Example 'R 16 1 20 3'");
             }
@@ -57,7 +58,7 @@ public class CommandCenter {
                 Integer x = Integer.valueOf(matcher.group(1));
                 Integer y = Integer.valueOf(matcher.group(2));
                 char fill = matcher.group(3).charAt(0);
-                return new FillArea(x, y, fill, canvas);
+                return new FillArea(x, y, fill);
             } else {
                 throw new IllegalArgumentException("Invalid command: to fill an area you must provide B x y c . Example 'B 10 3 o'");
             }
@@ -74,8 +75,9 @@ public class CommandCenter {
             throw new IllegalArgumentException("A command must be provided");
         }
 
-        String command = input.split(" ")[0];
-        CommandBuilder commandBuilder = drawOptions.get(command.toUpperCase());
+        String command = input.split(" ")[0].toUpperCase();
+
+        CommandBuilder commandBuilder = drawOptions.get(command);
 
         if(commandBuilder == null) {
             throw new IllegalArgumentException("The command '" + command  + "' is not supported");

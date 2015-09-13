@@ -5,15 +5,11 @@ import java.io.PrintStream;
 import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 
 public class Canvas {
-    private Character[][] canvas;
-    private int width;
-    private int height;
+    private final Character[][] canvas;
+    private final int width;
+    private final int height;
 
-    public void create(int width, int height) {
-        if(canvas != null) {
-            throw new IllegalArgumentException("Unable to create a canvas as one as already been created");
-        }
-
+    public Canvas(int width, int height) {
         this.width = width;
         this.height = height;
 
@@ -45,7 +41,6 @@ public class Canvas {
     }
 
     public boolean isEmptySpace(Point point) {
-        hasCanvasBeenCreated();
         return canvas[point.y - 1][point.x -1] == null;
     }
 
@@ -96,5 +91,13 @@ public class Canvas {
 
     public char atPoint(Point point) {
         return canvas[point.y - 1][point.x - 1];
+    }
+
+    public void draw(DrawingAction command) {
+        command.draw();
+    }
+
+    public interface DrawingAction {
+        void draw();
     }
 }

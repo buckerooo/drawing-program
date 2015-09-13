@@ -1,22 +1,25 @@
 package com.springer.draw;
 
 import java.io.PrintStream;
+import java.util.Optional;
 
 public class DrawingProgram {
     private final CommandCenter commandCenter;
-    private final Canvas canvas = new Canvas();
-
     private final PrintStream printStream;
+
+    private Optional<Canvas> canvas = Optional.empty();
 
     public DrawingProgram(PrintStream printStream, ProgramExiter programExiter) {
         this.printStream = printStream;
-        this.commandCenter = new CommandCenter(canvas, programExiter);
+        this.commandCenter = new CommandCenter(programExiter);
     }
 
     public void enterCommand(String command) {
         try {
-            commandCenter.buildCommand(command).draw();
-            canvas.printCanvas(printStream);
+
+            canvas = Optional.ofNullable(commandCenter.buildCommand(command).draw(canvas));
+
+            canvas.get().printCanvas(printStream);
         } catch (Exception e) {
             e.printStackTrace();
             printStream.println(e.getMessage());

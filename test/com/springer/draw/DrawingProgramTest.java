@@ -155,4 +155,25 @@ public class DrawingProgramTest {
         drawingProgram.enterCommand("L 1 2 3 4");
         assertThat(actualOutput.toString(), equalTo("To draw a line either the x's or the y's must have the same value.\n"));
     }
+
+    @Test
+    public void canCreateABrandNewCanvasWippingTheOldOne() {
+        ByteArrayOutputStream actualOutput = new ByteArrayOutputStream();
+
+        DrawingProgram drawingProgram = new DrawingProgram(new PrintStream(actualOutput), ()->{});
+        drawingProgram.enterCommand("C 10 2");
+        drawingProgram.enterCommand("L 1 2 3 2");
+
+        actualOutput.reset();
+
+        drawingProgram.enterCommand("C 10 2");
+
+        String expectedOutput =
+                        "------------\n" +
+                        "|          |\n" +
+                        "|          |\n" +
+                        "------------\n" ;
+
+        assertThat(actualOutput.toString(), equalTo(expectedOutput));
+    }
 }

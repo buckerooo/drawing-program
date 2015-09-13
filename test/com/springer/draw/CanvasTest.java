@@ -6,33 +6,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
-import static com.springer.draw.commands.CreateCanvas.CREATE_CANVAS_COMMAND;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 
 public class CanvasTest {
 
     @Test
-    public void cannotDrawOnABlankCanvas() {
-        Canvas canvas = new Canvas();
-
-        willThrowExceptionWithMessage((x) -> canvas.fill(new Point(1, 1), 'x'), "Unable to draw on a blank canvas, please create canvas first using " + CREATE_CANVAS_COMMAND);
-    }
-
-    @Test
-    public void cannotCreateACanvasThe() {
-        Canvas canvas = new Canvas();
-
-        canvas.create(10, 5);
-
-        willThrowExceptionWithMessage((x) -> canvas.create(10, 5), "Unable to create a canvas as one as already been created");
-    }
-
-    @Test
     public void canFillInASinglePointOnTheCanvas() {
-        Canvas canvas = new Canvas();
-
-        canvas.create(3, 3);
+        Canvas canvas = new Canvas(3, 3);
 
         canvas.fill(new Point(2, 2), 'x');
 
@@ -45,9 +26,7 @@ public class CanvasTest {
 
     @Test
     public void canFillInAnAreaOnTheCanvas() {
-        Canvas canvas = new Canvas();
-
-        canvas.create(4, 4);
+        Canvas canvas = new Canvas(4, 4);
 
         canvas.fill(new Point(2, 2), new Point(3, 3), 'x');
 
@@ -63,9 +42,7 @@ public class CanvasTest {
 
     @Test
     public void canSeeIfAPointIsOnTheCanvas() {
-        Canvas canvas = new Canvas();
-
-        canvas.create(4, 4);
+        Canvas canvas = new Canvas(4, 4);
 
         assertFalse(canvas.isOnCanvas(new Point(0, 0)));
         assertFalse(canvas.isOnCanvas(new Point(0, 1)));
@@ -79,9 +56,7 @@ public class CanvasTest {
 
     @Test
     public void canFillALineFromTopToBottomOnTheCanvas() {
-        Canvas canvas = new Canvas();
-
-        canvas.create(4, 4);
+        Canvas canvas = new Canvas(4, 4);
 
         canvas.fill(new Point(2, 1), new Point(2, 4), 'x');
 
@@ -93,9 +68,7 @@ public class CanvasTest {
 
     @Test
     public void canFillALineFromBottomToTopOnTheCanvas() {
-        Canvas canvas = new Canvas();
-
-        canvas.create(4, 4);
+        Canvas canvas = new Canvas(4, 4);
 
         canvas.fill(new Point(2, 4), new Point(2, 1), 'x');
 
@@ -107,9 +80,7 @@ public class CanvasTest {
 
     @Test
     public void canFillALineFromLeftToRightOnTheCanvas() {
-        Canvas canvas = new Canvas();
-
-        canvas.create(4, 4);
+        Canvas canvas = new Canvas(4, 4);
 
         canvas.fill(new Point(2, 2), new Point(4, 2), 'x');
 
@@ -120,9 +91,7 @@ public class CanvasTest {
 
     @Test
     public void canFillALineFromRightToLeftOnTheCanvas() {
-        Canvas canvas = new Canvas();
-
-        canvas.create(4, 4);
+        Canvas canvas = new Canvas(4, 4);
 
         canvas.fill(new Point(2, 2), new Point(4, 2), 'x');
 
@@ -133,8 +102,7 @@ public class CanvasTest {
 
     @Test
     public void cannotDrawOnTheEdgeOfTheCanvas() {
-        Canvas canvas = new Canvas();
-        canvas.create(10, 5);
+        Canvas canvas = new Canvas(10, 5);
 
         willThrowExceptionWithMessage((x) -> canvas.fill(new Point(0, 1), 'x'), "Unable to draw out of canvas, bounds are (1,1) to (10,5)");
         willThrowExceptionWithMessage((x) -> canvas.fill(new Point(1, 0), 'x'), "Unable to draw out of canvas, bounds are (1,1) to (10,5)");
@@ -144,8 +112,7 @@ public class CanvasTest {
 
     @Test
     public void whenPrintingTheCanvasInSticksABorderRoundTheEdge() {
-        Canvas canvas = new Canvas();
-        canvas.create(4, 2);
+        Canvas canvas = new Canvas(4, 2);
 
         String expectedOutput =
                         "------\n" +

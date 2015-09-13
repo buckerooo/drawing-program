@@ -2,22 +2,22 @@ package com.springer.draw.commands;
 
 import com.springer.draw.Canvas;
 
+import java.util.Optional;
+
 public class CreateCanvas implements DrawCommand {
 
     public static final String CREATE_CANVAS_COMMAND = "C w h";
 
     private final Integer width;
     private final Integer height;
-    private final Canvas canvas;
 
-    public CreateCanvas(Integer width, Integer height, Canvas canvas) {
+    public CreateCanvas(Integer width, Integer height) {
         this.width = width;
         this.height = height;
-        this.canvas = canvas;
     }
 
     @Override
-    public void draw() {
-        canvas.create(width, height);
+    public Canvas draw(Optional<Canvas> canvas) {
+        return new Canvas(width, height);
     }
 }

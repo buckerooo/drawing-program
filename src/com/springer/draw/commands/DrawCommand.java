@@ -1,5 +1,9 @@
 package com.springer.draw.commands;
 
+import com.springer.draw.Canvas;
+
+import java.util.Optional;
+
 public interface DrawCommand {
-    void draw();
+    Canvas draw(Optional<Canvas> canvas);
 }

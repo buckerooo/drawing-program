@@ -19,7 +19,11 @@ public class Canvas {
     }
 
     public void fill(Point from, Point to, char x) {
-        arePointsWithinBounds(from, to);
+        if(from.x == 0 || from.y == 0 || to.x == 0 || to.y == 0 ||
+                from.x > width || to.x > width ||
+                from.y > height || to.y > height) {
+            throw new UnsupportedOperationException("Unable to draw out of canvas, bounds are (1,1) to (" + width + "," + height + ")");
+        }
 
         Point topPoint = from.y < to.y ? from : to;
         Point bottomPoint = from.y > to.y ? from : to;
@@ -42,7 +46,8 @@ public class Canvas {
     }
 
     public void printCanvas(PrintStream printStream) {
-        printStream.print(charXTimes(width + 2, '-'));
+        String horizontalBorder = charXTimes(width + 2, '-');
+        printStream.print(horizontalBorder);
         printStream.print("\n");
 
         for(int row = 0; row < height; row++) {
@@ -55,7 +60,7 @@ public class Canvas {
             printStream.print("\n");
         }
 
-        printStream.print(charXTimes(width + 2, '-'));
+        printStream.print(horizontalBorder);
         printStream.print("\n");
     }
 
@@ -69,14 +74,6 @@ public class Canvas {
 
     public boolean isOnCanvas(Point point) {
         return point.x > 0 && point.y > 0 && point.y <= height && point.x <= width;
-    }
-
-    private void arePointsWithinBounds(Point from, Point to) {
-        if(from.x == 0 || from.y == 0 || to.x == 0 || to.y == 0 ||
-                from.x > width || to.x > width ||
-                from.y > height || to.y > height) {
-            throw new UnsupportedOperationException("Unable to draw out of canvas, bounds are (1,1) to (" + width + "," + height + ")");
-        }
     }
 
     public char atPoint(Point point) {

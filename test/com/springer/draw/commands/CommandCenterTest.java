@@ -1,6 +1,6 @@
-package com.springer.draw;
+package com.springer.draw.commands;
 
-import com.springer.draw.commands.*;
+import com.springer.draw.app.ProgramExiter;
 import org.junit.Test;
 
 import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;

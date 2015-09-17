@@ -1,7 +1,7 @@
 package com.springer.draw.commands;
 
-import com.springer.draw.Canvas;
-import com.springer.draw.Point;
+import com.springer.draw.app.Canvas;
+import com.springer.draw.app.Point;
 
 import java.util.Optional;
 import java.util.Stack;

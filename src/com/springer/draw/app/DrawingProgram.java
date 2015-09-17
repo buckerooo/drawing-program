@@ -1,4 +1,6 @@
-package com.springer.draw;
+package com.springer.draw.app;
+
+import com.springer.draw.commands.CommandCenter;
 
 import java.io.PrintStream;
 import java.util.Optional;

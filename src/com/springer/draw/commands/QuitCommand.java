@@ -1,7 +1,7 @@
 package com.springer.draw.commands;
 
-import com.springer.draw.Canvas;
-import com.springer.draw.ProgramExiter;
+import com.springer.draw.app.Canvas;
+import com.springer.draw.app.ProgramExiter;
 
 import java.util.Optional;
 

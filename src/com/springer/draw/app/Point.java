@@ -1,4 +1,4 @@
-package com.springer.draw;
+package com.springer.draw.app;
 
 public class Point {
     public final int x;

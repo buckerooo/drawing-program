@@ -1,4 +1,4 @@
-package com.springer.draw;
+package com.springer.draw.app;
 
 import java.io.PrintStream;
 

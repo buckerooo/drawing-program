@@ -30,7 +30,7 @@ public class DrawLine implements DrawCommand {
             throw new UnsupportedOperationException("Unable to draw on a blank canvas, please create canvas first using " + CREATE_CANVAS_COMMAND);
         });
 
-        canvas.draw(() -> canvas.fill(new Point(x1, y1), new Point(x2, y2), 'x'));
+        canvas.draw((canvasFiller) -> canvasFiller.fill(new Point(x1, y1), new Point(x2, y2), 'x'));
 
         return possibleCanvas.get();
     }

@@ -25,14 +25,13 @@ public class FillArea implements DrawCommand {
             throw new UnsupportedOperationException("Unable to draw on a blank canvas, please create canvas first using " + CREATE_CANVAS_COMMAND);
         });
 
-        canvas.draw(() -> {
+        canvas.draw((canvasFiller) -> {
             Stack<Point> stack = new Stack<>();
             stack.push(new Point(x, y));
 
             while (!stack.empty()) {
                 Point point = stack.pop();
-                if (canvas.isOnCanvas(point) && canvas.isEmptySpace(point)) {
-                    canvas.fill(point, fillColor);
+                if (canvasFiller.fill(point, fillColor)) {
 
                     stack.push(new Point(point.x, point.y + 1));
                     stack.push(new Point(point.x, point.y - 1));

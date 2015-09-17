@@ -24,7 +24,6 @@ public class FillAreaTest {
         for (int x = 1; x < width; x++) {
             for (int y = 1; y < height; y++) {
                  assertThat(canvas.atPoint(new Point(x, y)), equalTo('o'));
-
             }
         }
     }

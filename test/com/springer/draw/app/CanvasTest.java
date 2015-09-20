@@ -6,8 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CanvasTest {
 
@@ -29,7 +28,7 @@ public class CanvasTest {
         Canvas canvas = new Canvas(3, 3);
 
         canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'x', false));
-        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'o', true));
+        canvas.draw(canvasFiller -> assertTrue(canvasFiller.fill(new Point(2, 2), 'o', true)));
 
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('o'));
     }
@@ -39,7 +38,7 @@ public class CanvasTest {
         Canvas canvas = new Canvas(3, 3);
 
         canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'x', false));
-        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'o', false));
+        canvas.draw(canvasFiller -> assertFalse(canvasFiller.fill(new Point(2, 2), 'o', false)));
 
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
     }

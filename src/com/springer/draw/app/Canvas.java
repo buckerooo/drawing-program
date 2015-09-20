@@ -54,11 +54,11 @@ public class Canvas {
 
     public void draw(DrawingAction command) {
         command.draw(new DrawingTool() {
-            public boolean fill(Point point, char fillColor) {
-                return attemptFill(point, fillColor);
+            public boolean fill(Point point, char fillColor, boolean overwrite) {
+                return attemptFill(point, fillColor, overwrite);
             }
 
-            public void fill(Point from, Point to, char fillColor) {
+            public void fill(Point from, Point to, char fillColor, boolean overwrite) {
                 Point topPoint = from.y < to.y ? from : to;
                 Point bottomPoint = from.y > to.y ? from : to;
                 Point leftPoint = from.x < to.x ? from : to;
@@ -66,12 +66,12 @@ public class Canvas {
 
                 for (int row = topPoint.y; row <= bottomPoint.y; row++) {
                     for(int cell = leftPoint.x; cell <= rightPoint.x; cell++) {
-                        attemptFill(new Point(cell, row), fillColor);
+                        attemptFill(new Point(cell, row), fillColor, overwrite);
                     }
                 }
             }
 
-            private boolean attemptFill(Point point, char fillColor) {
+            private boolean attemptFill(Point point, char fillColor, boolean overwrite) {
                 if(point.x == 0 || point.y == 0 ||
                         point.x > width || point.y > height) {
                     return false;
@@ -79,7 +79,7 @@ public class Canvas {
 
                 Character currentChar = canvas[point.y - 1][point.x - 1];
 
-                if(currentChar != null) {
+                if(currentChar != null && !overwrite) {
                     return false;
                 }
 
@@ -90,8 +90,8 @@ public class Canvas {
     }
 
     public interface DrawingTool {
-        boolean fill(Point point, char fillColor);
-        void fill(Point from, Point to, char fillColor);
+        boolean fill(Point point, char fillColor, boolean overwrite);
+        void fill(Point from, Point to, char fillColor, boolean overwrite);
     }
 
     public interface DrawingAction {

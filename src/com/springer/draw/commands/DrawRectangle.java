@@ -29,10 +29,10 @@ public class DrawRectangle implements DrawCommand {
         });
 
         canvas.draw((canvasFiller) -> {
-            canvasFiller.fill(new Point(upperLeftX, upperLeftY), new Point(upperLeftX, lowerRightY), fillChar);
-            canvasFiller.fill(new Point(upperLeftX, upperLeftY), new Point(lowerRightX, upperLeftY), fillChar);
-            canvasFiller.fill(new Point(upperLeftX, lowerRightY), new Point(lowerRightX, lowerRightY), fillChar);
-            canvasFiller.fill(new Point(lowerRightX, upperLeftY), new Point(lowerRightX, lowerRightY), fillChar);
+            canvasFiller.fill(new Point(upperLeftX, upperLeftY), new Point(upperLeftX, lowerRightY), fillChar, true);
+            canvasFiller.fill(new Point(upperLeftX, upperLeftY), new Point(lowerRightX, upperLeftY), fillChar, true);
+            canvasFiller.fill(new Point(upperLeftX, lowerRightY), new Point(lowerRightX, lowerRightY), fillChar, true);
+            canvasFiller.fill(new Point(lowerRightX, upperLeftY), new Point(lowerRightX, lowerRightY), fillChar, true);
         });
 
         return canvas;

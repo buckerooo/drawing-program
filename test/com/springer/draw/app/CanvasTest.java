@@ -15,7 +15,7 @@ public class CanvasTest {
     public void canFillInASinglePointOnTheCanvas() {
         Canvas canvas = new Canvas(3, 3);
 
-        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'x'));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'x', false));
 
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
         assertTrue(canvas.isEmptySpace(new Point(1, 2)));
@@ -25,10 +25,56 @@ public class CanvasTest {
     }
 
     @Test
+    public void canOverwriteASinglePointOnTheCanvas() {
+        Canvas canvas = new Canvas(3, 3);
+
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'x', false));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'o', true));
+
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('o'));
+    }
+
+    @Test
+    public void canNotOverwriteASinglePointOnTheCanvas() {
+        Canvas canvas = new Canvas(3, 3);
+
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'x', false));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), 'o', false));
+
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
+    }
+
+    @Test
+    public void canOverwriteAnAreaOnTheCanvas() {
+        Canvas canvas = new Canvas(4, 4);
+
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(3, 3), 'x', false));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(3, 3), 'o', true));
+
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('o'));
+        assertThat(canvas.atPoint(new Point(3, 2)), equalTo('o'));
+        assertThat(canvas.atPoint(new Point(3, 3)), equalTo('o'));
+        assertThat(canvas.atPoint(new Point(2, 3)), equalTo('o'));
+    }
+
+    @Test
+    public void canNotOverwriteAnAreaOnTheCanvas() {
+        Canvas canvas = new Canvas(4, 4);
+
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(3, 3), 'x', false));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(3, 3), 'o', false));
+
+        assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(3, 2)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(3, 3)), equalTo('x'));
+        assertThat(canvas.atPoint(new Point(2, 3)), equalTo('x'));
+    }
+
+    @Test
     public void canFillInAnAreaOnTheCanvas() {
         Canvas canvas = new Canvas(4, 4);
 
-        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(3, 3), 'x'));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(3, 3), 'x', true));
 
         assertTrue(canvas.isEmptySpace(new Point(1, 2)));
         assertTrue(canvas.isEmptySpace(new Point(2, 1)));
@@ -44,7 +90,7 @@ public class CanvasTest {
     public void canFillALineFromTopToBottomOnTheCanvas() {
         Canvas canvas = new Canvas(4, 4);
 
-        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 1), new Point(2, 4), 'x'));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 1), new Point(2, 4), 'x', true));
 
         assertThat(canvas.atPoint(new Point(2, 1)), equalTo('x'));
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
@@ -56,7 +102,7 @@ public class CanvasTest {
     public void canFillALineFromBottomToTopOnTheCanvas() {
         Canvas canvas = new Canvas(4, 4);
 
-        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 4), new Point(2, 1), 'x'));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 4), new Point(2, 1), 'x', true));
 
         assertThat(canvas.atPoint(new Point(2, 1)), equalTo('x'));
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
@@ -68,7 +114,7 @@ public class CanvasTest {
     public void canFillALineFromLeftToRightOnTheCanvas() {
         Canvas canvas = new Canvas(4, 4);
 
-        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(4, 2), 'x'));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(4, 2), 'x', true));
 
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
         assertThat(canvas.atPoint(new Point(3, 2)), equalTo('x'));
@@ -79,7 +125,7 @@ public class CanvasTest {
     public void canFillALineFromRightToLeftOnTheCanvas() {
         Canvas canvas = new Canvas(4, 4);
 
-        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(4, 2), 'x'));
+        canvas.draw(canvasFiller -> canvasFiller.fill(new Point(2, 2), new Point(4, 2), 'x', true));
 
         assertThat(canvas.atPoint(new Point(2, 2)), equalTo('x'));
         assertThat(canvas.atPoint(new Point(3, 2)), equalTo('x'));
@@ -90,10 +136,10 @@ public class CanvasTest {
     public void cannotDrawOnTheEdgeOfTheCanvas() {
         Canvas canvas = new Canvas(10, 5);
 
-        canvas.draw(canvasFiller -> assertThat(canvasFiller.fill(new Point(0, 1), 'x'), equalTo(false)));
-        canvas.draw(canvasFiller -> assertThat(canvasFiller.fill(new Point(1, 0), 'x'), equalTo(false)));
-        canvas.draw(canvasFiller -> assertThat(canvasFiller.fill(new Point(11, 1), 'x'), equalTo(false)));
-        canvas.draw(canvasFiller -> assertThat(canvasFiller.fill(new Point(9, 6), 'x'), equalTo(false)));
+        canvas.draw(canvasFiller -> assertThat(canvasFiller.fill(new Point(0, 1), 'x', false), equalTo(false)));
+        canvas.draw(canvasFiller -> assertThat(canvasFiller.fill(new Point(1, 0), 'x', false), equalTo(false)));
+        canvas.draw(canvasFiller -> assertThat(canvasFiller.fill(new Point(11, 1), 'x', false), equalTo(false)));
+        canvas.draw(canvasFiller -> assertThat(canvasFiller.fill(new Point(9, 6), 'x', false), equalTo(false)));
     }
 
     @Test

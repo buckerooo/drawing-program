@@ -31,7 +31,7 @@ public class FillArea implements DrawCommand {
 
             while (!stack.empty()) {
                 Point point = stack.pop();
-                if (canvasFiller.fill(point, fillColor)) {
+                if (canvasFiller.fill(point, fillColor, false)) {
 
                     stack.push(new Point(point.x, point.y + 1));
                     stack.push(new Point(point.x, point.y - 1));

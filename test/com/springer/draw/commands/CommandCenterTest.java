@@ -18,6 +18,15 @@ public class CommandCenterTest {
     }
 
     @Test
+    public void stripsOfAnyLeadingOrTrailingWhitespace() {
+        assertThat(new CommandCenter(programExiter).buildCommand(" C 5 10 "), instanceOf(CreateCanvas.class));
+        assertThat(new CommandCenter(programExiter).buildCommand(" L 1 2 6 2 "), instanceOf(DrawLine.class));
+        assertThat(new CommandCenter(programExiter).buildCommand(" R 16 1 20 3 "), instanceOf(DrawRectangle.class));
+        assertThat(new CommandCenter(programExiter).buildCommand(" B 10 3 o "), instanceOf(FillArea.class));
+        assertThat(new CommandCenter(programExiter).buildCommand(" Q "), instanceOf(QuitCommand.class));
+    }
+
+    @Test
     public void canCreateACanvasCommandGivenValidInputs() {
         assertThat(new CommandCenter(programExiter).buildCommand("C 5 10"), instanceOf(CreateCanvas.class));
         assertThat(new CommandCenter(programExiter).buildCommand("c 5 10"), instanceOf(CreateCanvas.class));
@@ -117,10 +126,8 @@ public class CommandCenterTest {
 
     @Test
     public void canCreateAQuitCommand() {
-        assertThat(new CommandCenter(() -> {
-        }).buildCommand("Q"), instanceOf(QuitCommand.class));
-        assertThat(new CommandCenter(() -> {
-        }).buildCommand("q"), instanceOf(QuitCommand.class));
+        assertThat(new CommandCenter(() -> {}).buildCommand("Q"), instanceOf(QuitCommand.class));
+        assertThat(new CommandCenter(() -> {}).buildCommand("q"), instanceOf(QuitCommand.class));
     }
 
     @Test

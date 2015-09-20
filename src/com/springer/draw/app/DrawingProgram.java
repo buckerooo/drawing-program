@@ -23,7 +23,6 @@ public class DrawingProgram {
 
             canvas.get().printCanvas(printStream);
         } catch (Exception e) {
-            e.printStackTrace();
             printStream.println(e.getMessage());
         }
 

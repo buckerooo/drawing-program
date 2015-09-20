@@ -70,12 +70,13 @@ public class CommandCenter {
         DrawCommand create(String inputs);
     }
 
-    public DrawCommand buildCommand(String input) {
-        if(input.trim().isEmpty()) {
+    public DrawCommand buildCommand(final String input) {
+        String trimmedInput = input.trim();
+        if(trimmedInput.isEmpty()) {
             throw new IllegalArgumentException("A command must be provided");
         }
 
-        String command = input.split(" ")[0].toUpperCase();
+        String command = trimmedInput.split(" ")[0].toUpperCase();
 
         CommandBuilder commandBuilder = drawOptions.get(command);
 
@@ -83,6 +84,6 @@ public class CommandCenter {
             throw new IllegalArgumentException("The command '" + command  + "' is not supported");
         }
 
-        return commandBuilder.create(input);
+        return commandBuilder.create(trimmedInput);
     }
 }

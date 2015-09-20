@@ -16,11 +16,15 @@ public class DrawingProgramCLI {
 
         String input;
 
-        printStream.print("enter command: ");
+        enterCommand(printStream);
 
         while((input=br.readLine())!=null){
             drawingProgram.enterCommand(input);
-            printStream.print("enter command: ");
+            enterCommand(printStream);
         }
+    }
+
+    private static void enterCommand(PrintStream printStream) {
+        printStream.print("enter command: ");
     }
 }

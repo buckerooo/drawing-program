@@ -19,7 +19,7 @@ public class DrawingProgram {
     public void enterCommand(String command) {
         try {
 
-            canvas = Optional.ofNullable(commandCenter.buildCommand(command).draw(canvas));
+            canvas = Optional.of(commandCenter.buildCommand(command).draw(canvas));
 
             canvas.get().printCanvas(printStream);
         } catch (Exception e) {

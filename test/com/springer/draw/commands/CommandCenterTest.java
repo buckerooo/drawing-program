@@ -3,7 +3,7 @@ package com.springer.draw.commands;
 import com.springer.draw.app.ProgramExiter;
 import org.junit.Test;
 
-import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
+import static com.springer.draw.ExceptionChecker.willThrowExceptionWithMessage;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 

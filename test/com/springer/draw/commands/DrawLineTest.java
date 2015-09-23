@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.Optional;
 
-import static com.springer.draw.TestHelper.willThrowExceptionWithMessage;
+import static com.springer.draw.ExceptionChecker.willThrowExceptionWithMessage;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 

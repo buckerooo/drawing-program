@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-public class TestHelper {
+public class ExceptionChecker {
     public static void willThrowExceptionWithMessage(Runnable consumer, String message) {
         try {
             consumer.run();

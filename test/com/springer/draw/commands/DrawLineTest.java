@@ -16,7 +16,7 @@ public class DrawLineTest {
     public void eitherXMustBeSameOrYTheSame() {
         Canvas canvas = new Canvas(10, 10);
 
-        willThrowExceptionWithMessage((x) -> new DrawLine(1, 2, 3, 4).draw(Optional.of(canvas)),
+        willThrowExceptionWithMessage(() -> new DrawLine(1, 2, 3, 4).draw(Optional.of(canvas)),
                 "To draw a line either the x's or the y's must have the same value.");
     }
 
